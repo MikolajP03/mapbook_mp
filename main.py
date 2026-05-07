@@ -1,6 +1,7 @@
 from mapbook_lib.model import users
 from mapbook_lib.controller import read_users, add_user, remove_user, update_user, update_user_post, get_user_map
 
+
 def main():
     while True:
         print("=====MENU=====")
@@ -27,6 +28,7 @@ def main():
             update_user_post(users)
         if choice == "6":
             get_user_map(users)
+
 
 if __name__ == "__main__":
     main()
