@@ -35,13 +35,12 @@ def update_user(users_data: list) -> None:
             user['name'] = input("Podaj nowe imię użytkownika")
             user['location'] = input("Podaj nowa lokalizację")
 
+
 def update_user_post(users_data: list) -> None:
     user_to_update = input("Podaj imię znajomego do update")
     for user in users_data:
         if user['name'] == user_to_update:
-           user['posts'].append(input("Co słychać?"))
-
-
+            user['posts'].append(input("Co słychać?"))
 
 
 while True:
@@ -66,13 +65,3 @@ while True:
         update_user(users)
     if choice == "5":
         update_user_post(users)
-
-
-
-
-
-
-
-
-
-# Twoó znajowy z miejscowości . opu
