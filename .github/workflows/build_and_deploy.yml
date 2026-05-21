@@ -12,9 +12,9 @@ jobs:
     runs-on:
       - self-hosted
 
-  environments: ${{ github.ref_name }}
+    environment: ${{ github.ref_name }}
 
-  steps:
+    steps:
     - uses: actions/checkout@v3
 
     - name: build and setting docker environment on server
