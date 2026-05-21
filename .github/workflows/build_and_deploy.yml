@@ -1,8 +1,6 @@
 name: build_and_push
 on:
   push:
-    - env-test
-    - env-qa
 
 permissions:
   contents: read
@@ -14,7 +12,7 @@ jobs:
     runs-on:
       - self-hosted
 
-  environments: ${{ github.ref_name}}
+  environments: ${{ github.ref_name }}
 
   steps:
     - uses: actions/checkout@v3
