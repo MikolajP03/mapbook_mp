@@ -1,0 +1,15 @@
+services:
+  postgis:
+    build:
+      context: ..
+      dockerfile: docker/postgis/Dockerfile
+    image: "ppyt_postgis"
+    container_name: "ppyt_postgis"
+    environment:
+    - POSTGRES_PASSWORD=admin
+    - POSTGRES_USER=admin
+    - POSTGRES_DB=mapbook
+    ports:
+      - 65432:5432
+
+

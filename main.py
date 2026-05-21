@@ -2,7 +2,6 @@ from tkinter import *
 import tkintermapview
 from bs4 import BeautifulSoup
 import requests
-
 from mapbook_lib.controller import get_coordinates
 
 users: list = []
@@ -69,6 +68,7 @@ def show_user_details():
     map_widget.set_position(users[i].coordinates[0], users[i].coordinates[1])
     map_widget.set_zoom(12)
 
+
 def edit_user():
     i = listbox_lista_obiektow.index(ACTIVE)
     imie = users[i].imie
@@ -90,7 +90,7 @@ def update_user(i):
     users[i].lokalizacja = entry_location.get()
     users[i].coordinates = get_coordinates(users[i])
     users[i].marker.delete()
-    users[i].marker = map_widget.set_marker(users[i].coordinates[0], users[i].coordinates[1], text = users[i].imie)
+    users[i].marker = map_widget.set_marker(users[i].coordinates[0], users[i].coordinates[1], text=users[i].imie)
 
     button_dodaj_uzytkownika.config(text="Zapisz zmiany", command=add_user)
     show_users()
@@ -112,9 +112,9 @@ ramka_formularz = Frame(root)
 ramka_szczegoly_obiektow = Frame(root)
 ramka_mapa = Frame(root)
 
-ramka_lista_obiektow.grid(row=0, column=0,padx=50)
+ramka_lista_obiektow.grid(row=0, column=0, padx=50)
 ramka_formularz.grid(row=0, column=1)
-ramka_szczegoly_obiektow.grid(row=1, column=0, columnspan=2,padx=50, pady=20)
+ramka_szczegoly_obiektow.grid(row=1, column=0, columnspan=2, padx=50, pady=20)
 ramka_mapa.grid(row=2, column=0, columnspan=2)
 
 # RAMKA LISTA OBIEKTOW
@@ -142,8 +142,8 @@ entry_liczba_postow = Entry(ramka_formularz)
 entry_location = Entry(ramka_formularz)
 button_dodaj_uzytkownika = Button(ramka_formularz, text="Dodaj użytkownika", command=add_user)
 
-label_formularz.grid(row=0, column=0,columnspan=2)
-label_imie.grid(row=1, column=0,sticky=W)
+label_formularz.grid(row=0, column=0, columnspan=2)
+label_imie.grid(row=1, column=0, sticky=W)
 label_nazwisko.grid(row=2, column=0, sticky=W)
 label_liczba_postow.grid(row=3, column=0, sticky=W)
 label_location.grid(row=4, column=0, sticky=W)
