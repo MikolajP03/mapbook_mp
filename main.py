@@ -83,7 +83,7 @@ def update_user(i):
     users[i].coordinates = User.get_coordinates(users[i])
     users[i].marker.delete()
     users[i].marker = map_widget.set_marker(users[i].coordinates[0], users[i].coordinates[1], text=users[i].imie,
-                                            marker_color_circle = "blue" )
+                                            marker_color_circle="blue")
 
     button_dodaj_uzytkownika.config(text="Zapisz zmiany", command=add_user)
     show_users()
