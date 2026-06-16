@@ -2,8 +2,8 @@ from tkinter import *
 import tkintermapview
 # from bs4 import BeautifulSoup
 # import requests
-from geopy.geocoders import Nominatim
-
+from geopy.geocoders import Nominatim,ArcGIS
+import time
 # from catering_lib.model import *
 
 # from mapbook_lib.controller import get_coordinates
@@ -24,8 +24,9 @@ class User:
                                             marker_color_circle="blue")
 
     def get_coordinates(self) -> list:
-        geolocator = Nominatim(user_agent="CateringMap")
+        geolocator = ArcGIS(user_agent="CateringMap")
         location = geolocator.geocode(self.lokalizacja)
+        time.sleep(1)
         return [location.latitude, location.longitude]
 
 
@@ -38,9 +39,11 @@ class Company:
                                             marker_color_circle="green")
 
     def get_coordinates(self) -> list:
-        geolocator = Nominatim(user_agent="CateringMap")
+        geolocator = ArcGIS(user_agent="CateringMap")
         location = geolocator.geocode(self.lokalizacja)
+        time.sleep(1)
         return [location.latitude, location.longitude]
+
 
 
 class Place:
@@ -52,8 +55,9 @@ class Place:
                                             marker_color_circle="yellow")
 
     def get_coordinates(self) -> list:
-        geolocator = Nominatim(user_agent="CateringMap")
+        geolocator = ArcGIS(user_agent="CateringMap")
         location = geolocator.geocode(self.lokalizacja)
+        time.sleep(1)
         return [location.latitude, location.longitude]
 
 
@@ -61,18 +65,21 @@ def show_users() -> None:
     listbox_lista_obiektow.delete(0, END)
     for idx, user in enumerate(users):
         listbox_lista_obiektow.insert(idx, user.imie)
+        time.sleep(1)
 
 
 def show_companies() -> None:
     listbox_lista_firm.delete(0, END)
     for idx, company in enumerate(companies):
         listbox_lista_firm.insert(idx, company.nazwa_firmy)
+        time.sleep(1)
 
 
 def show_places() -> None:
     listbox_lista_lokali.delete(0, END)
     for idx, place in enumerate(places):
         listbox_lista_lokali.insert(idx, place.lokalizacja)
+        time.sleep(1)
 
 
 def add_user():
@@ -426,11 +433,11 @@ map_widget = tkintermapview.TkinterMapView(ramka_mapa, width=1200, height=600, c
 map_widget.set_zoom(6)
 map_widget.set_position(52.2, 21)
 map_widget.grid(row=0, column=0)
+
 users: list = [User("A", "B", "Marywilska 44, 03-042 Warszawa", "C"),
                User("Mikołaj", "Pochopień", "Krzyżówki 36, 03-193 Warszawa", "Masters Catering", )]
 companies: list = [Company("Catering 66", "Sokołowska 22, 01-142 Warszawa"),
-                   Company("Masters Catering", "Marszałkowska 82, 00-517 Warszawa"),
-                   Company("Catering Global Chefs", "Księcia Trojdena 2c, 02-109 Warszawa")]
+                   Company("Masters Catering", "Marszałkowska 82, 00-517 Warszawa")]
 places: list = [Place("Catering 66", "Łazienkowska 3, 00-449 Warszawa")]
 
 show_users()
