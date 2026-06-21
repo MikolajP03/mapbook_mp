@@ -51,7 +51,7 @@ class Place:
         self.lokal_firma = lokal_firma
         self.lokalizacja = lokalizacja
         self.coordinates = Place.get_coordinates(self)
-        self.marker = map_widget.set_marker(self.coordinates[0], self.coordinates[1], text=self.lokal_firma,
+        self.marker = map_widget.set_marker(self.coordinates[0], self.coordinates[1], text=self.lokalizacja,
                                             marker_color_circle="yellow")
 
     def get_coordinates(self) -> list:
@@ -156,6 +156,12 @@ def show_user_details():
     map_widget.set_position(users[i].coordinates[0], users[i].coordinates[1])
     map_widget.set_zoom(12)
 
+def filter_users():
+    listbox_lista_obiektow.delete(0, END)
+    for idx, user in enumerate(users):
+        if user.firma_prac == entry_filter_users.get():
+            listbox_lista_obiektow.insert(idx, user.imie)
+
 
 def show_company_details():
     i = listbox_lista_firm.index(ACTIVE)
@@ -175,6 +181,12 @@ def show_place_details():
     label_lokalizacja_lokalu_szczegoly_wartosc.config(text=lokalizacja)
     map_widget.set_position(places[i].coordinates[0], places[i].coordinates[1])
     map_widget.set_zoom(12)
+
+def filter_places():
+    listbox_lista_lokali.delete(0, END)
+    for idx, place in enumerate(places):
+        if place.lokal_firma == entry_filter_places.get():
+            listbox_lista_lokali.insert(idx, place.lokalizacja)
 
 
 def edit_user():
@@ -253,7 +265,7 @@ def update_place(i):
     places[i].coordinates = Place.get_coordinates(places[i])
     places[i].marker.delete()
     places[i].marker = map_widget.set_marker(places[i].coordinates[0], places[i].coordinates[1],
-                                             text=places[i].lokal_firma,
+                                             text=places[i].lokalizacja,
                                              marker_color_circle="yellow")
 
     button_dodaj_lokal.config(text="Zapisz zmiany", command=add_place)
@@ -271,17 +283,19 @@ root.geometry("1920x1200")
 # lista_firm = [Company("Catering 66 Events & Weddings", "Sokołowska 22, 01-142 Warszawa")]
 # companies.append(lista_firm)
 # FRAME
+subframe = Frame(root)
 ramka_lista_obiektow = Frame(root)
-ramka_formularz = Frame(root)
-ramka_formularz_firma = Frame(root)
-ramka_szczegoly_obiektow = Frame(root)
-ramka_szczegoly_firmy = Frame(root)
+ramka_formularz = Frame(subframe)
+#ramka_formularz_firma = Frame(root)
+ramka_szczegoly_obiektow = Frame(subframe)
+#ramka_szczegoly_firmy = Frame(root)
 ramka_mapa = Frame(root)
 
 ramka_lista_obiektow.grid(row=0, column=0, padx=50)
-ramka_formularz.grid(row=0, column=1)
+subframe.grid(row=0, column=1, padx=50)
+ramka_formularz.grid(row=0, column=0, sticky=N)
 # ramka_formularz_firma.grid(row=0, column=2)
-ramka_szczegoly_obiektow.grid(row=1, column=0, columnspan=2, padx=50, pady=20)
+ramka_szczegoly_obiektow.grid(row=1, column=0,  sticky=N)
 # ramka_szczegoly_firmy.grid(row=2, column=0, columnspan=2, padx=50, pady=20)
 
 ramka_mapa.grid(row=2, column=0, columnspan=2)
@@ -292,12 +306,18 @@ listbox_lista_obiektow = Listbox(ramka_lista_obiektow)
 button_szczegoly_obiektu = Button(ramka_lista_obiektow, text="Pokaż szczegóły ", command=show_user_details)
 button_usun_obiekt = Button(ramka_lista_obiektow, text="Usuń pracownika", command=remove_user)
 button_edytuj_obiekt = Button(ramka_lista_obiektow, text="Edytuj pracownika", command=edit_user)
+entry_filter_users = Entry(ramka_lista_obiektow)
+button_filter_users = Button(ramka_lista_obiektow,text = "Filtruj pracowników", command = filter_users)
+button_unfilter_users = Button(ramka_lista_obiektow, text = "Usuń filtr", command = show_users)
 
 label_lista_obiektow.grid(row=0, column=0)
 listbox_lista_obiektow.grid(row=1, column=0)
 button_szczegoly_obiektu.grid(row=2, column=0)
 button_usun_obiekt.grid(row=3, column=0)
 button_edytuj_obiekt.grid(row=4, column=0)
+entry_filter_users.grid(row=5, column=0)
+button_filter_users.grid(row=6, column=0)
+button_unfilter_users.grid(row=7, column=0)
 
 # RAMKA LISTA FIRM
 label_lista_firm = Label(ramka_lista_obiektow, text="Lista firm: ")
@@ -318,12 +338,18 @@ listbox_lista_lokali = Listbox(ramka_lista_obiektow)
 button_szczegoly_lokalu = Button(ramka_lista_obiektow, text="Pokaż szczegóły ", command=show_place_details)
 button_usun_lokal = Button(ramka_lista_obiektow, text="Usuń lokal", command=remove_place)
 button_edytuj_lokal = Button(ramka_lista_obiektow, text="Edytuj lokal", command=edit_place)
+entry_filter_places = Entry(ramka_lista_obiektow)
+button_filter_places = Button(ramka_lista_obiektow, text = "Filtruj lokale", command=filter_places)
+button_unfilter_places = Button(ramka_lista_obiektow, text = "Usuń filtr", command = show_places)
 
 label_lista_lokali.grid(row=0, column=6)
 listbox_lista_lokali.grid(row=1, column=6)
 button_szczegoly_lokalu.grid(row=2, column=6)
 button_usun_lokal.grid(row=3, column=6)
 button_edytuj_lokal.grid(row=4, column=6)
+entry_filter_places.grid(row=5, column=6)
+button_filter_places.grid(row=6, column=6)
+button_unfilter_places.grid(row=7, column=6)
 
 # RAMKA FORMULARZ PRACOWNIKA
 label_formularz_prac = Label(ramka_formularz, text="Dodaj pracownika:")
@@ -409,10 +435,10 @@ label_nazwa_firmy_szczegoly_wartosc = Label(ramka_szczegoly_obiektow, text="..."
 label_lokalizacja_firmy_szczegoly_wartosc = Label(ramka_szczegoly_obiektow, text="...")
 
 label_szczegoly_firmy.grid(row=2, column=0, sticky=W, columnspan=2)
-label_nazwa_szczegoly_firmy.grid(row=3, column=1, sticky=W)
-label_nazwa_firmy_szczegoly_wartosc.grid(row=3, column=2, sticky=W)
-label_lokalizacja_firmy_szczegoly.grid(row=3, column=3, sticky=W)
-label_lokalizacja_firmy_szczegoly_wartosc.grid(row=3, column=4, sticky=W)
+label_nazwa_szczegoly_firmy.grid(row=3, column=0, sticky=W)
+label_nazwa_firmy_szczegoly_wartosc.grid(row=3, column=1, sticky=W)
+label_lokalizacja_firmy_szczegoly.grid(row=3, column=2, sticky=W)
+label_lokalizacja_firmy_szczegoly_wartosc.grid(row=3, column=3, sticky=W)
 
 # RAMKA SZCZEGOLY LOKALU
 label_szczegoly_lokalu = Label(ramka_szczegoly_obiektow, text="Szczegóły lokalu:")
@@ -423,10 +449,10 @@ label_lokal_firma_szczegoly_wartosc = Label(ramka_szczegoly_obiektow, text="..."
 label_lokalizacja_lokalu_szczegoly_wartosc = Label(ramka_szczegoly_obiektow, text="...")
 
 label_szczegoly_lokalu.grid(row=4, column=0, sticky=W, columnspan=2)
-label_lokal_firma_szczegoly.grid(row=5, column=1, sticky=W)
-label_lokal_firma_szczegoly_wartosc.grid(row=5, column=2, sticky=W)
-label_lokalizacja_lokalu_szczegoly.grid(row=5, column=3, sticky=W)
-label_lokalizacja_lokalu_szczegoly_wartosc.grid(row=5, column=4, sticky=W)
+label_lokal_firma_szczegoly.grid(row=5, column=0, sticky=W)
+label_lokal_firma_szczegoly_wartosc.grid(row=5, column=1, sticky=W)
+label_lokalizacja_lokalu_szczegoly.grid(row=5, column=2, sticky=W)
+label_lokalizacja_lokalu_szczegoly_wartosc.grid(row=5, column=3, sticky=W)
 
 # RAMKA MAPA
 map_widget = tkintermapview.TkinterMapView(ramka_mapa, width=1200, height=600, corner_radius=4)
@@ -437,8 +463,11 @@ map_widget.grid(row=0, column=0)
 users: list = [User("A", "B", "Marywilska 44, 03-042 Warszawa", "C"),
                User("Mikołaj", "Pochopień", "Krzyżówki 36, 03-193 Warszawa", "Masters Catering", )]
 companies: list = [Company("Catering 66", "Sokołowska 22, 01-142 Warszawa"),
-                   Company("Masters Catering", "Marszałkowska 82, 00-517 Warszawa")]
-places: list = [Place("Catering 66", "Łazienkowska 3, 00-449 Warszawa")]
+                   Company("Masters Catering", "Marszałkowska 82, 00-517 Warszawa"),
+                   Company("Royal Catering", "Korkowa 47, 04-502 Warszawa")]
+places: list = [Place("Catering 66", "Łazienkowska 3, 00-449 Warszawa"),
+                Place("Catering 66", "Światowida 17, 03-144 Warszawa"),
+                Place("Masters Catering", "Głębocka 15, 03-287 Warszawa")]
 
 show_users()
 show_companies()
