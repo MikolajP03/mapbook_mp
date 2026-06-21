@@ -67,6 +67,14 @@ def show_users() -> None:
         listbox_lista_obiektow.insert(idx, user.imie)
         time.sleep(1)
 
+def unfilter_users():
+    listbox_lista_obiektow.delete(0, END)
+    for idx, user in enumerate(users):
+        listbox_lista_obiektow.insert(idx, user.imie)
+        user.marker = map_widget.set_marker(user.coordinates[0], user.coordinates[1],
+                                            text=user.imie, marker_color_circle="blue")
+        time.sleep(1)
+
 
 def show_companies() -> None:
     listbox_lista_firm.delete(0, END)
@@ -81,6 +89,13 @@ def show_places() -> None:
         listbox_lista_lokali.insert(idx, place.lokalizacja)
         time.sleep(1)
 
+def unfilter_places():
+    listbox_lista_lokali.delete(0, END)
+    for idx, place in enumerate(places):
+        listbox_lista_lokali.insert(idx, place.lokalizacja)
+        place.marker = map_widget.set_marker(place.coordinates[0], place.coordinates[1],
+                                             text=place.lokalizacja, marker_color_circle="yellow")
+        time.sleep(1)
 
 def add_user():
     name = entry_imie.get()
@@ -159,8 +174,11 @@ def show_user_details():
 def filter_users():
     listbox_lista_obiektow.delete(0, END)
     for idx, user in enumerate(users):
+        user.marker.delete()
         if user.firma_prac == entry_filter_users.get():
             listbox_lista_obiektow.insert(idx, user.imie)
+            user.marker = map_widget.set_marker(user.coordinates[0], user.coordinates[1],
+                                                text=user.imie, marker_color_circle="blue")
 
 
 def show_company_details():
@@ -185,8 +203,11 @@ def show_place_details():
 def filter_places():
     listbox_lista_lokali.delete(0, END)
     for idx, place in enumerate(places):
+        place.marker.delete()
         if place.lokal_firma == entry_filter_places.get():
             listbox_lista_lokali.insert(idx, place.lokalizacja)
+            place.marker = map_widget.set_marker(place.coordinates[0], place.coordinates[1],
+                                                text=place.lokalizacja, marker_color_circle="yellow")
 
 
 def edit_user():
@@ -308,7 +329,7 @@ button_usun_obiekt = Button(ramka_lista_obiektow, text="Usuń pracownika", comma
 button_edytuj_obiekt = Button(ramka_lista_obiektow, text="Edytuj pracownika", command=edit_user)
 entry_filter_users = Entry(ramka_lista_obiektow)
 button_filter_users = Button(ramka_lista_obiektow,text = "Filtruj pracowników", command = filter_users)
-button_unfilter_users = Button(ramka_lista_obiektow, text = "Usuń filtr", command = show_users)
+button_unfilter_users = Button(ramka_lista_obiektow, text = "Usuń filtr", command = unfilter_users)
 
 label_lista_obiektow.grid(row=0, column=0)
 listbox_lista_obiektow.grid(row=1, column=0)
@@ -340,7 +361,7 @@ button_usun_lokal = Button(ramka_lista_obiektow, text="Usuń lokal", command=rem
 button_edytuj_lokal = Button(ramka_lista_obiektow, text="Edytuj lokal", command=edit_place)
 entry_filter_places = Entry(ramka_lista_obiektow)
 button_filter_places = Button(ramka_lista_obiektow, text = "Filtruj lokale", command=filter_places)
-button_unfilter_places = Button(ramka_lista_obiektow, text = "Usuń filtr", command = show_places)
+button_unfilter_places = Button(ramka_lista_obiektow, text = "Usuń filtr", command = unfilter_places)
 
 label_lista_lokali.grid(row=0, column=6)
 listbox_lista_lokali.grid(row=1, column=6)
