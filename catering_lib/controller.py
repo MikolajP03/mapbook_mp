@@ -249,7 +249,7 @@ button_szczegoly_obiektu = Button(ramka_lista_obiektow, text="Pokaż szczegóły
 button_usun_obiekt = Button(ramka_lista_obiektow, text="Usuń pracownika", command=remove_user)
 button_edytuj_obiekt = Button(ramka_lista_obiektow, text="Edytuj pracownika", command=edit_user)
 entry_filter_users = Entry(ramka_lista_obiektow)
-button_filter_users = Button(ramka_lista_obiektow, text="Filtruj pracowników", command=filter_users)
+button_filter_users = Button(ramka_lista_obiektow, text="Filtruj pracowników \nwg firmy", command=filter_users)
 button_unfilter_users = Button(ramka_lista_obiektow, text="Usuń filtr", command=unfilter_users)
 
 label_lista_obiektow.grid(row=0, column=0)
@@ -281,7 +281,7 @@ button_szczegoly_lokalu = Button(ramka_lista_obiektow, text="Pokaż szczegóły 
 button_usun_lokal = Button(ramka_lista_obiektow, text="Usuń lokal", command=remove_place)
 button_edytuj_lokal = Button(ramka_lista_obiektow, text="Edytuj lokal", command=edit_place)
 entry_filter_places = Entry(ramka_lista_obiektow)
-button_filter_places = Button(ramka_lista_obiektow, text="Filtruj lokale", command=filter_places)
+button_filter_places = Button(ramka_lista_obiektow, text="Filtruj lokale \nwg firmy", command=filter_places)
 button_unfilter_places = Button(ramka_lista_obiektow, text="Usuń filtr", command=unfilter_places)
 
 label_lista_lokali.grid(row=0, column=6)
@@ -329,11 +329,11 @@ label_nazwa_firmy.grid(row=1, column=2, sticky=W)
 label_location_firma.grid(row=2, column=2, sticky=W)
 entry_nazwa_firmy.grid(row=1, column=3)
 entry_location_firma.grid(row=2, column=3)
-button_dodaj_firme.grid(row=4, column=3, columnspan=2)
+button_dodaj_firme.grid(row=5, column=2, columnspan=2)
 
 # RAMKA FORMULARZ LOKALU
 label_formularz_lokal = Label(ramka_formularz, text="Dodaj lokal:")
-label_lokal_firma = Label(ramka_formularz, text="Nazwa lokalu:")
+label_lokal_firma = Label(ramka_formularz, text="Nazwa obsługującej firmy:")
 label_location_lokal = Label(ramka_formularz, text="Lokalizacja:")
 entry_lokal_firma = Entry(ramka_formularz)
 entry_location_lokal = Entry(ramka_formularz)
@@ -344,7 +344,7 @@ label_lokal_firma.grid(row=1, column=4, sticky=W)
 label_location_lokal.grid(row=2, column=4, sticky=W)
 entry_lokal_firma.grid(row=1, column=5)
 entry_location_lokal.grid(row=2, column=5)
-button_dodaj_lokal.grid(row=4, column=5, columnspan=2)
+button_dodaj_lokal.grid(row=5, column=5, columnspan=2)
 
 # RAMKA SZCZEGOLY PRACOWNIKA
 label_szczegoly_obiektu = Label(ramka_szczegoly_obiektow, text="Szczegóły pracownika:")
